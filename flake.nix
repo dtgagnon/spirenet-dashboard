@@ -40,17 +40,7 @@
           pkgs = nixpkgs.legacyPackages.${system};
         in
         {
-          default = pkgs.mkShell {
-            packages = with pkgs; [
-              # Add any tools needed for development
-              python3  # For local testing with python -m http.server
-            ];
-
-            shellHook = ''
-              echo "SpireNet Website Development Environment"
-              echo "Run 'python -m http.server 8000 -d site' to test locally"
-            '';
-          };
+          default = import ./shell.nix { inherit pkgs; };
         }
       );
 
