@@ -48,5 +48,13 @@
       formatter = forAllSystems (system:
         nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
       );
+
+      # NixOS module
+      nixosModules.default = { config, lib, pkgs, ... }: {
+        imports = [ ./module.nix ];
+        config = lib.mkIf config.services.spirenet-dashboard.enable {
+          services.spirenet-dashboard.package = lib.mkDefault self.packages.${pkgs.system}.default;
+        };
+      };
     };
 }
